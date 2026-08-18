@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  cpf           String   @unique
+  email         String   @unique
+  password_hash String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  subscriptions Subscription[]
+
+  @@map("users")
+}
+
+model Plan {
+  id         String   @id @default(uuid())
+  name       String
+  price      Decimal  @db.Decimal(10, 2)
+  duration   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+enum CouponStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+model Coupon {
+  id             String       @id @default(uuid())
+  code           String
+  discount_type  DiscountType
+  discount_value Decimal      @db.Decimal(10, 2)
+  max_uses       Int
+  expires_at     DateTime
+  status         CouponStatus @default(ACTIVE)
+
+  subscriptions Subscription[]
+
+  @@map("coupons")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+}
+
+model Subscription {
+  id String @id @default(uuid())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  plan    Plan   @relation(fields: [plan_id], references: [id])
+  plan_id String
+
+  coupon    Coupon? @relation(fields: [coupon_id], references: [id])
+  coupon_id String?
+
+  original_price Decimal            @db.Decimal(10, 2)
+  discount       Decimal            @db.Decimal(10, 2)
+  final_price    Decimal            @db.Decimal(10, 2)
+  status         SubscriptionStatus
+  started_at     DateTime
+  cancelled_at   DateTime?
+
+  @@map("subscriptions")
+}
