@@ -4,7 +4,7 @@ CupomFree api.
 
 ## RFs (Requisitos funcionais)
 
-- [ ] Deve ser possível se cadastrar;
+- [x] Deve ser possível se cadastrar;
 - [ ] Deve ser possível se autenticar;
 - [ ] Deve ser possível obter o perfil de um usuário logado;
 - [ ] Deve ser possível o usuário visualizar todos os planos;
@@ -20,13 +20,12 @@ CupomFree api.
 
 ## RNs (Regras de negócio)
 
-- [ ] O usuário não deve poder se cadastrar com um e-mail duplicado;
+- [x] O usuário não deve poder se cadastrar com um e-mail duplicado;
+- [x] O usuário não deve poder se cadastrar com um cpf duplicado;
 - [ ] O usuário não pode ter mais de 1 assinatura ativa;
 - [ ] O usuário não pode utilizar beneficios caso não tenha assinatura;
 - [ ] Os cupons só podem ser criado, editado, cancelado por administradpres;
 - [ ] Os planos só podem ser criado, editado, cancelado por administradpres;
-- [ ] O check-in só pode ser validado por administradores;
-- [ ] A academia só pode ser cadastrada por administradores;
 - [ ] O usuário e o administrador pode criar uma assinatura;
 - [ ] O usuário e o administrador podem cancelar uma assinatura;
 

@@ -6,7 +6,9 @@
   "scripts": {
     "start:dev": "tsx watch src/server.ts",
     "start:prod": "node build/server.js",
-    "build": "tsup src/server.ts --out-dir build --format esm"
+    "build": "tsup src/server.ts --out-dir build --format esm",
+    "test": "vitest run --project unit",
+    "test:e2e": "vitest run --project e2e"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +18,9 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "26.2.0",
     "@types/pg": "^8.23.1",
+    "@types/supertest": "7.2.1",
     "prisma": "^7.9.1",
+    "supertest": "7.2.2",
     "tsup": "^8.5.1",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2",

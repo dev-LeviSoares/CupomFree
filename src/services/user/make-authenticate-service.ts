@@ -1,9 +1,9 @@
 import { PrismaUsersRepository } from "../../repositories/prisma/prisma-user-repository.js";
-import { RegisterService } from "./register.js";
+import { AuthenticateService } from "./authenticate.js";
 
-export function makeRegisterService() {
+export function makeAuthenticateService() {
   const usersRepository = new PrismaUsersRepository();
-  const useCase = new RegisterService(usersRepository);
+  const useCase = new AuthenticateService(usersRepository);
 
   return useCase;
 }
