@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
-import { makeRegisterService } from "../../../services/user/make-register-service.js";
+import { makeRegisterService } from "../../../services/user/factories/make-register-service.js";
 import { UserAlreadyExistsError } from "../../../services/errors/user-already-exists-error.js";
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {

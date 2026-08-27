@@ -4,6 +4,4 @@ import { register } from "./controllers/users/register-controller.js";
 
 export async function appRoutes( app: FastifyInstance) {
   app.get('/health', health);
-
-  app.post('/register', register);
 }

@@ -5,8 +5,8 @@ CupomFree api.
 ## RFs (Requisitos funcionais)
 
 - [x] Deve ser possível se cadastrar;
-- [ ] Deve ser possível se autenticar;
-- [ ] Deve ser possível obter o perfil de um usuário logado;
+- [x] Deve ser possível se autenticar;
+- [ ] Deve ser possível obter o perfil de um usuário;
 - [ ] Deve ser possível o usuário visualizar todos os planos;
 - [ ] Deve ser possível cadastrar um plano;
 - [ ] Deve ser possível editar um plano;
@@ -31,7 +31,7 @@ CupomFree api.
 
 ## RNFs (Requisitos não-funcionais)
 
-- [ ] A senha do usuário precisa estar criptografada;
-- [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [x] A senha do usuário precisa estar criptografada;
+- [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] Todas listas de dados precisam estar paginados com 20 itens por página;
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token);

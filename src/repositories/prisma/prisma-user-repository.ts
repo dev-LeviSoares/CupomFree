@@ -12,32 +12,61 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   async findByCpf (cpf: string): Promise<User | null> {
-    const userCpf = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         cpf
       }
     })
 
-    return userCpf;
+    return user;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const userEmail = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email
       }
     })
 
-    return userEmail;
+    return user;
   }
 
   async findById(id: string): Promise<User | null> {
-    const userId = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id
       }
     })
 
-    return userId;
+    return user;
+  }
+
+  async findManyBy(query: string): Promise<User[]> {
+    const users = await prisma.user.findMany({
+      where: {
+        OR: [
+          {
+            email: {
+              contains: query,
+              mode: "insensitive",
+            }
+          },
+          {
+            cpf: {
+              contains: query,
+              mode: "insensitive",
+            }
+          },
+          {
+            name: {
+              contains: query,
+              mode: "insensitive",
+            }
+          },
+        ]
+      }
+    });
+
+    return users
   }
 }
