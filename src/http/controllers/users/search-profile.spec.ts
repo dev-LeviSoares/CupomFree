@@ -18,7 +18,7 @@ describe('Search User (E2E)', () => {
 
     const response = await request(app.server)
     .get('/search-user')
-    .query({ email: 'levi', page: 1 })
+    .query({ q: 'levisoares@', page: 1 })
     .set("Authorization", `Bearer ${token}`)
     .send();
 
@@ -37,7 +37,7 @@ describe('Search User (E2E)', () => {
     const { token } = await createAndAuthenticateUser(app, true)
 
     const response = await request(app.server)
-    .get('/search-user').query({ cpf: '999', page: 1 })
+    .get('/search-user').query({ q: '999', page: 1 })
     .set("Authorization", `Bearer ${token}`)
     .send();
 
@@ -56,7 +56,7 @@ describe('Search User (E2E)', () => {
 
     const response = await request(app.server)
     .get('/search-user')
-    .query({ name: 'levi', page: 1 })
+    .query({ q: 'Levi Soares', page: 1 })
     .set("Authorization", `Bearer ${token}`)
     .send();
 
@@ -84,9 +84,9 @@ describe('Search User (E2E)', () => {
 
     const response = await request(app.server)
     .get('/search-user')
-    .query({ name: 'Search User', page: 2 })
+    .query({ q: 'Search User', page: 2 })
     .set('Authorization', `Bearer ${token}`)
-    
+
     expect(response.statusCode).toEqual(200)
     expect(response.body.users).toHaveLength(2)
     expect(response.body.users).toEqual([

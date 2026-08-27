@@ -35,18 +35,21 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user
   }
 
-  async findManyBy(query: string, page: number){
-    const term = query.toLowerCase()
-
-    const users = this.items.filter((items) => 
-      items.email.toLowerCase().includes(term) ||
-      items.cpf.toLowerCase().includes(term) ||
-      items.name.toLowerCase().includes(term)
-    ).slice((page - 1) * 20, page * 20);
-
-    return users
+  async findManyBy(query: string | undefined, page: number) {
+    const filtered = query
+      ? this.items.filter((item) => {
+          const term = query.toLowerCase()
+          return (
+            item.email.toLowerCase().includes(term) ||
+            item.cpf.toLowerCase().includes(term) ||
+            item.name.toLowerCase().includes(term)
+          )
+        })
+      : this.items
+  
+    return filtered.slice((page - 1) * 20, page * 20)
   }
-
+  
   async create (data: Prisma.UserCreateInput) {
     const user = {
       id: randomUUID(),

@@ -3,26 +3,16 @@ import z from "zod";
 import { makeSearchUserService } from "../../../services/user/factories/make-search-user-profile.js";
 
 export async function searchUserProfile(request: FastifyRequest, reply: FastifyReply) {
-  const searchUsersQuerySchema = z.union([
-    z.strictObject({
-      name: z.string().min(2),
-      page: z.coerce.number().min(1).default(1),
-    }),
-    z.strictObject({
-      email: z.string().min(2),
-      page: z.coerce.number().min(1).default(1),
-    }),
-    z.strictObject({
-      cpf: z.string().min(2),
-      page: z.coerce.number().min(1).default(1),
-    }),
-  ])
+  const searchUsersQuerySchema = z.object({
+    q: z.string().min(2).optional(),
+    page: z.coerce.number().min(1).default(1),
+  })
 
-  const identifier = searchUsersQuerySchema.parse(request.query);
+  const { q, page } = searchUsersQuerySchema.parse(request.query)
 
   const searchUserService = makeSearchUserService();
 
-  const { users } = await searchUserService.execute(identifier);
+  const { users } = await searchUserService.execute({ query: q, page });
 
   return reply.status(200).send({
     users: users.map((user) => ({

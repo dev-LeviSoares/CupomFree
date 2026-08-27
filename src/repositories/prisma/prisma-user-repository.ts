@@ -41,35 +41,23 @@ export class PrismaUsersRepository implements UsersRepository {
     return user;
   }
 
-  async findManyBy(query: string, page: number): Promise<User[]> {
+  async findManyBy(query: string | undefined, page: number): Promise<User[]> {
     const users = await prisma.user.findMany({
-      where: {
-        OR: [
-          {
-            email: {
-              contains: query,
-              mode: "insensitive",
-            }
-          },
-          {
-            cpf: {
-              contains: query,
-              mode: "insensitive",
-            }
-          },
-          {
-            name: {
-              contains: query,
-              mode: "insensitive",
-            }
-          },
-        ]
-      },
+      ...(query
+        ? {
+            where: {
+              OR: [
+                { email: { contains: query, mode: 'insensitive' } },
+                { cpf: { contains: query, mode: 'insensitive' } },
+                { name: { contains: query, mode: 'insensitive' } },
+              ],
+            },
+          }
+        : {}),
       take: 20,
       skip: (page - 1) * 20,
       orderBy: { created_at: 'asc' },
-    });
-
+    })
     return users
   }
 }

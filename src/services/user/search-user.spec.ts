@@ -21,7 +21,8 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      cpf: '123', page: 1
+      query: '123',
+      page: 1,
     })
 
     expect(users).toHaveLength(1)
@@ -42,7 +43,8 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      email: 'levi', page: 1
+      query: 'levisoares@',
+      page: 1,
     })
 
     expect(users).toHaveLength(1)
@@ -63,7 +65,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      name: 'Levi', page: 1
+      query: 'Levi Soa', page: 1
     })
 
     expect(users).toHaveLength(1)
@@ -83,7 +85,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      name: 'non-existing-name', page: 1
+      query: 'non-existing-name', page: 1
     })
 
     expect(users).toHaveLength(0)
@@ -98,7 +100,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      cpf: 'non-existing-cpf', page: 1
+      query: 'non-existing-cpf', page: 1
     })
 
     expect(users).toHaveLength(0)
@@ -113,7 +115,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      email: 'non-existing-email', page: 1
+      query: 'non-existing-email', page: 1
     })
 
     expect(users).toHaveLength(0)
@@ -130,7 +132,7 @@ describe('Get User Profile Use Case', () => {
     }
   
     const { users } = await sut.execute({
-      name: 'Levi Soares',
+      query: 'Levi Soares',
       page: 2
     })
   
@@ -139,5 +141,25 @@ describe('Get User Profile Use Case', () => {
       expect.objectContaining({ name: 'Levi Soares 21' }),
       expect.objectContaining({ name: 'Levi Soares 22' }),
     ])
+  })
+
+  it('should be able to list users without a query', async () => {
+    await usersRepository.create({
+      cpf: '123.456.789-10',
+      email: 'levisoares@test.com',
+      name: 'Levi Soares',
+      password_hash: await hash('12345678', 6)
+    })
+
+    await usersRepository.create({
+      cpf: '123.456.789-99',
+      email: 'jonatassantos@test.com',
+      name: 'Jonatas Santos',
+      password_hash: await hash('12345678', 6)
+    })
+  
+    const { users } = await sut.execute({ page: 1 })
+  
+    expect(users).toHaveLength(2)
   })
 })

@@ -6,5 +6,5 @@ export interface UsersRepository {
   findByEmail(email: string): Promise<User | null>;
   findById(id: string): Promise<User | null>;
   findByCpf(cpf: string): Promise<User | null>;
-  findManyBy(query: string, page: number): Promise<User[]>
+  findManyBy(query: string | undefined, page: number): Promise<User[]>
 }
