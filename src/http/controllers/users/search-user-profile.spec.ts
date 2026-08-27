@@ -1,17 +1,11 @@
 import request from 'supertest'
 import { app } from '../../../app.js';
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { createAndAuthenticateUser } from '../../../utils/create-and-authenticate-user.js';
 
 describe('Search User (E2E)', () => {
   beforeAll( async () => {
     await app.ready()
-
-    await request(app.server).post('/register').send({
-      cpf: '999.999.999-99',
-      email: 'levisoares@test.com',
-      name: 'Levi Soares',
-      password: '12345678'
-    })
   });
 
   afterAll( async () => {
@@ -20,9 +14,13 @@ describe('Search User (E2E)', () => {
 
   it('should be able to search profile by email', async () => {
 
-    const response = await request(app.server).get('/me').query({
-      email: 'levi',
-    })
+    const { token } = await createAndAuthenticateUser(app, true)
+
+    const response = await request(app.server)
+    .get('/search-user')
+    .query({ email: 'levi' })
+    .set("Authorization", `Bearer ${token}`)
+    .send();
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.users).toHaveLength(1)
@@ -36,9 +34,12 @@ describe('Search User (E2E)', () => {
 
   it('should be able to search profile by cpf', async () => {
 
-    const response = await request(app.server).get('/me').query({
-      cpf: '999',
-    })
+    const { token } = await createAndAuthenticateUser(app, true)
+
+    const response = await request(app.server)
+    .get('/search-user').query({ cpf: '999' })
+    .set("Authorization", `Bearer ${token}`)
+    .send();
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.users).toHaveLength(1)
@@ -51,10 +52,13 @@ describe('Search User (E2E)', () => {
   })
 
   it('should be able to search profile by name', async () => {
+    const { token } = await createAndAuthenticateUser(app, true)
 
-    const response = await request(app.server).get('/me').query({
-      name: 'levi',
-    })
+    const response = await request(app.server)
+    .get('/search-user')
+    .query({ name: 'levi' })
+    .set("Authorization", `Bearer ${token}`)
+    .send();
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.users).toHaveLength(1)
