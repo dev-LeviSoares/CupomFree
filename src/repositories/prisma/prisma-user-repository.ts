@@ -41,7 +41,7 @@ export class PrismaUsersRepository implements UsersRepository {
     return user;
   }
 
-  async findManyBy(query: string): Promise<User[]> {
+  async findManyBy(query: string, page: number): Promise<User[]> {
     const users = await prisma.user.findMany({
       where: {
         OR: [
@@ -64,7 +64,10 @@ export class PrismaUsersRepository implements UsersRepository {
             }
           },
         ]
-      }
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+      orderBy: { created_at: 'asc' },
     });
 
     return users

@@ -18,7 +18,7 @@ describe('Search User (E2E)', () => {
 
     const response = await request(app.server)
     .get('/search-user')
-    .query({ email: 'levi' })
+    .query({ email: 'levi', page: 1 })
     .set("Authorization", `Bearer ${token}`)
     .send();
 
@@ -37,7 +37,7 @@ describe('Search User (E2E)', () => {
     const { token } = await createAndAuthenticateUser(app, true)
 
     const response = await request(app.server)
-    .get('/search-user').query({ cpf: '999' })
+    .get('/search-user').query({ cpf: '999', page: 1 })
     .set("Authorization", `Bearer ${token}`)
     .send();
 
@@ -56,7 +56,7 @@ describe('Search User (E2E)', () => {
 
     const response = await request(app.server)
     .get('/search-user')
-    .query({ name: 'levi' })
+    .query({ name: 'levi', page: 1 })
     .set("Authorization", `Bearer ${token}`)
     .send();
 
@@ -68,5 +68,30 @@ describe('Search User (E2E)', () => {
         name: 'Levi Soares',
       })
     )
+  })
+
+  it('should be able to search users with pagination', async () => {
+    const { token } = await createAndAuthenticateUser(app, true)
+
+    for (let i = 1; i <= 22; i++) {
+      await request(app.server).post('/register').send({
+        name: `Search User ${i}`,
+        email: `search${i}@test.com`,
+        cpf: `111.111.111-${i}`,
+        password: '12345678',
+      })
+    }
+
+    const response = await request(app.server)
+    .get('/search-user')
+    .query({ name: 'Search User', page: 2 })
+    .set('Authorization', `Bearer ${token}`)
+    
+    expect(response.statusCode).toEqual(200)
+    expect(response.body.users).toHaveLength(2)
+    expect(response.body.users).toEqual([
+      expect.objectContaining({ name: 'Search User 21' }),
+      expect.objectContaining({ name: 'Search User 22' }),
+    ])
   })
 })

@@ -35,14 +35,14 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user
   }
 
-  async findManyBy(query: string){
+  async findManyBy(query: string, page: number){
     const term = query.toLowerCase()
 
     const users = this.items.filter((items) => 
       items.email.toLowerCase().includes(term) ||
       items.cpf.toLowerCase().includes(term) ||
       items.name.toLowerCase().includes(term)
-    );
+    ).slice((page - 1) * 20, page * 20);
 
     return users
   }
@@ -53,6 +53,7 @@ export class InMemoryUsersRepository implements UsersRepository {
       name: data.name,
       email: data.email,
       cpf: data.cpf,
+      role: data.role ?? 'MEMBER',
       password_hash: data.password_hash,
       created_at: new Date(),
       updated_at: new Date(),

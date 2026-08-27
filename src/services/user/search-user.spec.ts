@@ -17,11 +17,11 @@ describe('Get User Profile Use Case', () => {
       cpf: '123.456.789-10',
       email: 'levisoares@test.com',
       name: 'Levi Soares',
-      password_hash: await hash('12345678', 6)
+      password_hash: await hash('12345678', 6),
     })
 
     const { users } = await sut.execute({
-      cpf: '123'
+      cpf: '123', page: 1
     })
 
     expect(users).toHaveLength(1)
@@ -42,7 +42,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      email: 'levi'
+      email: 'levi', page: 1
     })
 
     expect(users).toHaveLength(1)
@@ -63,7 +63,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      name: 'Levi'
+      name: 'Levi', page: 1
     })
 
     expect(users).toHaveLength(1)
@@ -83,7 +83,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      name: 'non-existing-name'
+      name: 'non-existing-name', page: 1
     })
 
     expect(users).toHaveLength(0)
@@ -98,7 +98,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      cpf: 'non-existing-cpf'
+      cpf: 'non-existing-cpf', page: 1
     })
 
     expect(users).toHaveLength(0)
@@ -113,9 +113,31 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { users } = await sut.execute({
-      email: 'non-existing-email'
+      email: 'non-existing-email', page: 1
     })
 
     expect(users).toHaveLength(0)
   });
+
+  it('should be able to fetch paginated users profile search', async () => {
+    for (let i = 1; i <= 22; i++) {
+      await usersRepository.create({
+        cpf: `123.456.789-${i}`,
+        email: `levi${i}@test.com`, // único por usuário
+        name: `Levi Soares ${i}`,
+        password_hash: await hash('12345678', 6),
+      })
+    }
+  
+    const { users } = await sut.execute({
+      name: 'Levi Soares',
+      page: 2
+    })
+  
+    expect(users).toHaveLength(2);
+    expect(users).toEqual([
+      expect.objectContaining({ name: 'Levi Soares 21' }),
+      expect.objectContaining({ name: 'Levi Soares 22' }),
+    ])
+  })
 })

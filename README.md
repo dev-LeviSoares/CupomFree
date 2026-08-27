@@ -6,7 +6,8 @@ CupomFree api.
 
 - [x] Deve ser possível se cadastrar;
 - [x] Deve ser possível se autenticar;
-- [ ] Deve ser possível obter o perfil de um usuário;
+- [x] Deve ser possível obter o perfil de algum por email, cpf ou nome usuário;
+- [x] Deve ser possível obter o usuário obter seu perfil;
 - [ ] Deve ser possível o usuário visualizar todos os planos;
 - [ ] Deve ser possível cadastrar um plano;
 - [ ] Deve ser possível editar um plano;
@@ -24,8 +25,8 @@ CupomFree api.
 - [x] O usuário não deve poder se cadastrar com um cpf duplicado;
 - [ ] O usuário não pode ter mais de 1 assinatura ativa;
 - [ ] O usuário não pode utilizar beneficios caso não tenha assinatura;
-- [ ] Os cupons só podem ser criado, editado, cancelado por administradpres;
-- [ ] Os planos só podem ser criado, editado, cancelado por administradpres;
+- [ ] Os cupons só podem ser criado, editado, cancelado por administradores;
+- [ ] Os planos só podem ser criado, editado, cancelado por administradores;
 - [ ] O usuário e o administrador pode criar uma assinatura;
 - [ ] O usuário e o administrador podem cancelar uma assinatura;
 

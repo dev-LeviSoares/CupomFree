@@ -1,12 +1,13 @@
 import type { FastifyRequest, FastifyReply } from 'fastify';
+import { env } from '../../../env/index.js';
 
 export async function refresh (request: FastifyRequest, reply: FastifyReply) {
   await request.jwtVerify({ onlyCookie: true });
 
-  const { role } = request.user;
+  const { role, name } = request.user;
 
   const token = await reply.jwtSign(
-    { role }, 
+    { role, name }, 
     {
       sign: {
         sub: request.user.sub
@@ -15,7 +16,7 @@ export async function refresh (request: FastifyRequest, reply: FastifyReply) {
   );
 
   const refreshToken = await reply.jwtSign(
-    { role },
+    { role, name },
     {
       sign: {
         sub: request.user.sub,
@@ -27,7 +28,7 @@ export async function refresh (request: FastifyRequest, reply: FastifyReply) {
   return reply
   .setCookie('refreshToken', refreshToken, {
     path: '/',
-    secure: true,
+    secure: env.NODE_ENV === 'production' ? true : false,
     sameSite: true,
     httpOnly: true,
   })
