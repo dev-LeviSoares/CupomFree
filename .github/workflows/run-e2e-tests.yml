@@ -26,13 +26,13 @@ jobs:
 
     services:
       postgres:
-        image: bitnami/postgresql:16
+        image: postgresql:16
         ports:
           - 5432:5432
         env:
-          POSTGRESQL_USERNAME: docker
-          POSTGRESQL_PASSWORD: docker
-          POSTGRESQL_DATABASE: cupomfree
+          POSTGRES_USER: docker
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: cupomfree
         options: >-
           --health-cmd="pg_isready -U docker -d cupomfree"
           --health-interval=10s
