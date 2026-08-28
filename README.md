@@ -6,7 +6,7 @@ CupomFree api.
 
 - [x] Deve ser possível se cadastrar;
 - [x] Deve ser possível se autenticar;
-- [x] Deve ser possível obter o perfil de algum por email, cpf ou nome usuário;
+- [x] Deve ser possível obter o perfil por email, cpf ou nome usuário;
 - [x] Deve ser possível obter o usuário obter seu perfil;
 - [ ] Deve ser possível o usuário visualizar todos os planos;
 - [ ] Deve ser possível cadastrar um plano;
