@@ -8,16 +8,19 @@ CupomFree api.
 - [x] Deve ser possível se autenticar;
 - [x] Deve ser possível obter o perfil por email, cpf ou nome usuário;
 - [x] Deve ser possível obter o usuário obter seu perfil;
-- [ ] Deve ser possível o usuário visualizar todos os planos;
+- [ ] Deve ser possível obter o número de assinaturas realizadas pelo usuário logado;
+- [ ] Deve ser possível o usuário obter seu histórico de assinaturas;
 - [ ] Deve ser possível cadastrar um plano;
 - [ ] Deve ser possível editar um plano;
+- [ ] Deve ser possível ativar/desativar um plano;
 - [ ] Deve ser possível excluir um plano;
+- [ ] Deve ser possível o usuário visualizar todos os planos;
 - [ ] Deve ser possível cadastrar um cupom;
+- [ ] Deve ser possível editar um cupom;
+- [ ] Deve ser possível cancelar um cupom;
 - [ ] Deve ser possível validar o cupom de um usuário;
 - [ ] Deve ser possível o criar uma assiantura;
 - [ ] Deve ser possível o cancelar uma assinatura;
-- [ ] Deve ser possível obter o número de assinaturas realizadas pelo usuário logado;
-- [ ] Deve ser possível o usuário obter seu histórico de assinaturas;
 
 ## RNs (Regras de negócio)
 
